@@ -70,17 +70,17 @@ abstract class AbstractAction {
   }
 
  /**
-  * @return boolean
+  * @return int
   */
-  function getBoosterPoint(): boolean
+  function getBoosterPoint(): int
   {
    return $this->boosterPoint;
   }
 
  /**
-  * @return boolean
+  * @return int
   */
-  function getBoosterEvery(): boolean
+  function getBoosterEvery(): int
   {
    return $this->boosterEvery;
   }
@@ -106,7 +106,7 @@ abstract class AbstractAction {
   }
  
   /**
-  * @param boolean $every
+  * @param boolean $boosterAllowed
   * @return Action
   */
   function setBoosterAllowed(boolean $boosterAllowed): Action 
@@ -116,20 +116,20 @@ abstract class AbstractAction {
   }
 
   /**
-  * @param int $every
+  * @param int $boosterPoint
   * @return Action
   */
-  function setBoosterPoint(boolean $boosterPoint): Action 
+  function setBoosterPoint(int $boosterPoint): Action 
   {
    $this->boosterPoint = $boosterPoint;
    return $this;
   }
  
   /**
-  * @param int $every
+  * @param int $boosterEvery
   * @return Action
   */
-  function setBoosterEvery(boolean $boosterEvery): Action 
+  function setBoosterEvery(int $boosterEvery): Action 
   {
    $this->boosterEvery = $boosterEvery;
    return $this;
