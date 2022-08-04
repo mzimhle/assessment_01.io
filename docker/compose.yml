@@ -1,0 +1,20 @@
+version: '3.7'
+
+services:
+  # Unveel.io Assessment Website
+  # http://localhost:8084/
+  unveel:
+    build: ./images/php-${PHP_VERSION}/
+    volumes:
+      - ${ROOT_DIR}/site/:/www/unveel.io/
+      - ./images/php-${PHP_VERSION}/config/vhost.conf:/etc/apache2/sites-enabled/000-default.conf
+    env_file:
+      - ./.env
+    environment:
+      - TZ=GMT+2
+    ports:
+      - 8084:80
+    networks:
+      - dev    
+networks:
+  dev:
