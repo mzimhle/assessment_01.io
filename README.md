@@ -1,4 +1,4 @@
-# Unveel Assessment
+# Assessment_01 Assessment
 Assessment for senior developer position. Listed development tools and languages for the position are:
 - Docker Compose 
 - PHP, Symfony
@@ -27,7 +27,7 @@ We have the following structure of our folders:
     README.md   - Documentation of the entire assessment
 ```
 ###### PLEASE MAKE SURE
-- Make sure that you make sure the docker/.env file has the correct root variables, my root is `c:\sites\unveel.io\` as per environmental variable `ROOT_DIR`, this is used for docker to find the project and its image.
+- Make sure that you make sure the docker/.env file has the correct root variables, my root is `c:\sites\assessment_01.io\` as per environmental variable `ROOT_DIR`, this is used for docker to find the project and its image.
 - My image is running `PHP 8.1.7`
 
 ## Structure

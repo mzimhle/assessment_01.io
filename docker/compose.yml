@@ -1,12 +1,12 @@
 version: '3.7'
 
 services:
-  # Unveel.io Assessment Website
+  # Assessment_01.io Assessment Website
   # http://localhost:8084/
-  unveel:
+  assessment:
     build: ./images/php-${PHP_VERSION}/
     volumes:
-      - ${ROOT_DIR}/site/:/www/unveel.io/
+      - ${ROOT_DIR}/site/:/www/assessment_01.io/
       - ./images/php-${PHP_VERSION}/config/vhost.conf:/etc/apache2/sites-enabled/000-default.conf
     env_file:
       - ./.env
