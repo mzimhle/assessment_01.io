@@ -11,6 +11,7 @@ use Symfony\Component\HttpFoundation\Request;
 // Extras.
 use App\Form\ActionForm;
 use App\DTO\ActionDTO;
+use App\Entity\User;
 
 class HomeController extends AbstractController
 {
@@ -39,20 +40,29 @@ class HomeController extends AbstractController
     private function handleActionDTO(Request $request, ActionDTO $ActionDTO): Response
     {
         $ActionForm = $this->createForm(ActionForm::class, $ActionDTO, []);
-
+        $user       = null;
+        
         $ActionForm->handleRequest($request);
 
         if ($ActionForm->isSubmitted()) {
             if ($ActionForm->isValid()) {
-                // Deliveries 
-                $healthService->setName($ActionDTO->name);
-                $healthService->setFacility($ActionDTO->facility);
-                $healthService->setHealthProgram($ActionDTO->healthProgram);
+
+                $user = new User($ActionDTO->name);
+                // Add the delivery
+                $user->delivery->setQuantity($ActionDTO->delivery_quantity);
+                $user->delivery->setTime($ActionDTO->delivery_time);
+                // Add the ride share
+                $user->rideshare->setQuantity($ActionDTO->rideshare_quantity);
+                $user->rideshare->setTime($ActionDTO->rideshare_time);    
+                // Add the rent
+                $user->rent->setQuantity($ActionDTO->rent_quantity);
+                $user->rent->setTime($ActionDTO->rent_time);                    
             }
         }
 
         return $this->render('index.html.twig', [
-            'ActionForm' => $ActionForm->createView()
+            'ActionForm' => $ActionForm->createView(),
+            'user' => $user
         ]);
     }
 

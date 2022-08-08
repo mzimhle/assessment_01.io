@@ -17,9 +17,9 @@ abstract class AbstractAction {
   protected $point;
   /** @var int */
   protected $every;  
-  /** @var boolean */  
+  /** @var bool */  
   protected $boosterAllowed;
-  /** @var boolean */
+  /** @var int */
   protected $boosterPoint;
   /** @var int */
   protected $boosterEvery;
@@ -27,15 +27,15 @@ abstract class AbstractAction {
  /**
   * Construct - Set default values
   *
-  * @param int $point                   - The quantity of a normal point given for an action
-  * @param int $every                   - The number of times that point will be given, e.g. 1 per hour/day
-  * @param boolean $boosterAllowed      - Are booster points allowed for this action
-  * @param int $boosterPoint            - If allowed, the number of points given
-  * @param int $boosterEvery            - The number of times booster points are given after a certain time
+  * @param int $point           - The quantity of a normal point given for an action
+  * @param int $every           - The number of times that point will be given, e.g. 1 per hour/day
+  * @param bool $boosterAllowed - Are booster points allowed for this action
+  * @param int $boosterPoint    - If allowed, the number of points given
+  * @param int $boosterEvery    - The number of times booster points are given after a certain time
   *
   * @return void
   */
-  function __construct(int $point, int $every, boolean $boosterAllowed, int $boosterPoint, int $boosterEvery)  {
+  function __construct(int $point, int $every, bool $boosterAllowed, int $boosterPoint, int $boosterEvery)  {
     
     $this->point = $point;
     $this->every = $every;
@@ -62,9 +62,9 @@ abstract class AbstractAction {
   }
   
  /**
-  * @return boolean
+  * @return bool
   */
-  function getBoosterAllowed(): boolean
+  function getBoosterAllowed(): bool
   {
    return $this->boosterAllowed;
   }
@@ -109,7 +109,7 @@ abstract class AbstractAction {
   * @param boolean $boosterAllowed
   * @return Action
   */
-  function setBoosterAllowed(boolean $boosterAllowed): Action 
+  function setBoosterAllowed(bool $boosterAllowed): Action 
   {
    $this->boosterAllowed = $boosterAllowed;
    return $this;

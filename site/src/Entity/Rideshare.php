@@ -7,7 +7,7 @@ use App\Entity\Implement\Action;
 use App\Entity\Traits\ActionTrait;
 
 /**
- * Main class for the deliveries.
+ * Main class for the ride share.
  *
  * @since        1.0.0
  * @author       Mzimhle Mosiwe <mzimhle.mosiwe@gmail.com>
@@ -15,20 +15,15 @@ use App\Entity\Traits\ActionTrait;
  *
  */
 
-class Delivery extends AbstractAction implements Action {
+class Rideshare extends AbstractAction implements Action {
 
     use ActionTrait;
 
     protected $point = 1;
     protected $every = 1;
     protected $boosterAllowed = true;
-    protected $boosterPoint = 5;
-    protected $boosterEvery = 2;
-    // Days no 
-    protected $activeBoosterDateRanges = [
-        '2022-01-01' => '2022-01-31',
-        '2022-06-03' => '2022-06-31'       
-    ];
+    protected $boosterPoint = 10;
+    protected $boosterEvery = 8;
 
     /**
      * Construct
@@ -47,7 +42,7 @@ class Delivery extends AbstractAction implements Action {
      */
     public function __toString(): string
     {
-        return "Deliveries: <b>{$this->getQuantity()}</b> deliveries in <b>{$this->getTime()}</b> hours with <b>{$this->calculatePoints()}</b> points and will get <b>{$this->calculateAdditionalPoints()}</b> additional points. Totalling <b>{$this->calculateAllPoints()}</b> points. After a month it will be: <b>{$this->calculateExpiryPoints()}</b> <br />";
+        return "Rideshare: <b>{$this->getQuantity()}</b> ride shares in <b>{$this->getTime()}</b> hours with <b>{$this->calculatePoints()}</b> points and will get <b>{$this->calculateAdditionalPoints()}</b> additional points. Totalling <b>{$this->calculateAllPoints()}</b> points. After a month it will be: <b>{$this->calculateExpiryPoints()}</b> <br />";
     }
     
     /**

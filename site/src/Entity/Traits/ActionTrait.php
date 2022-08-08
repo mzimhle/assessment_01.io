@@ -47,7 +47,7 @@ trait ActionTrait
     */
     public function setTime(int $time): self
     {
-        $this->quantity = $quantity;
+        $this->time = $time;
         return $this;        
     }
 

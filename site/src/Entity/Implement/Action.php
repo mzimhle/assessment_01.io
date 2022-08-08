@@ -20,14 +20,37 @@ interface Action {
   *
   */
     public function __toString(): string;
-    
+
  /**
-  * On submission of the form, this is to calculate after submission.
+  * Calculate points recieved for an action
   *
-  * @return string
+  * @return int
   *
   */
-    public function calculate(): string;
+    public function calculatePoints(): int;
 
+ /**
+  * Calculate additional points received
+  *
+  * @return int
+  *
+  */
+    public function calculateAdditionalPoints(): int;
+
+ /**
+  * Calculate total points received
+  *
+  * @return int
+  *
+  */
+    public function calculateAllPoints(): int;
+    
+ /**
+  * Calculate points after expiry
+  *
+  * @return int
+  *
+  */
+    public function calculateExpiryPoints(): int;    
 }
 ?>

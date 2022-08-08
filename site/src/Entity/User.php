@@ -3,6 +3,9 @@
 namespace App\Entity;
 
 use App\Entity\MappedSuperclass\AbstractUser;
+use App\Entity\Delivery;
+use App\Entity\Rideshare;
+use App\Entity\Rent;
 
 /**
  * Main class for the user.
@@ -14,7 +17,11 @@ use App\Entity\MappedSuperclass\AbstractUser;
  */
 
 class User extends AbstractUser {
- 
+
+    public ?Delivery $delivery;
+    public ?Rideshare $rideshare;
+    public ?Rent $rent;
+
     /**
      * Construct - Set default values
      *
@@ -25,6 +32,10 @@ class User extends AbstractUser {
     public function __construct(string $name)
     {
         parent::__construct($name);
+        // Initialize objects
+        $this->delivery = new Delivery();
+        $this->rideshare = new Rideshare();
+        $this->rent = new Rent();
     }
 
     /**
@@ -35,7 +46,28 @@ class User extends AbstractUser {
      */
     public function __toString(): string
     {
-        return ucwords(strtolower((sprintf('Name of user is: %s', $this->name))));
+        return "Employee <strong>{$this->name}</strong> <br />{$this->delivery} <br />{$this->rideshare} <br />{$this->rent}<br />Total Points: <b>{$this->TotalPoints()}</b> with <b>{$this->TotalExpiry()}</b> month end will be removed.";
     }
 
+    /**
+     *
+     * Return total number of points for all actions in this given time
+     *  
+     * @return int
+     */
+    public function TotalPoints(): int
+    {
+        return $this->delivery->calculateAllPoints() + $this->rideshare->calculateAllPoints() + $this->rent->calculateAllPoints();
+    }
+    
+    /**
+     *
+     * Total number of points after expiry
+     *  
+     * @return int
+     */
+    public function TotalExpiry(): int
+    {
+        return $this->TotalPoints() - ($this->delivery->calculateExpiryPoints() + $this->rideshare->calculateExpiryPoints() + $this->rent->calculateExpiryPoints());
+    }    
 }

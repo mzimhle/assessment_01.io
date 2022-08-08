@@ -23,7 +23,7 @@ abstract class AbstractUser {
   *
   * @return void
   */
-  function __construct(string $name)  { 
+  function __construct(string $name) {
     $this->name = $name;
   }
  /**

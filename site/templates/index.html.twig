@@ -5,10 +5,8 @@
     <title>Incentives Program</title>
     <style>
     body {
-      max-width: 500px;
-      margin: auto;
-      background: white;
-      padding: 10px;
+        margin: auto;
+        padding: 10px;
     }
     </style>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous" />    
@@ -20,7 +18,7 @@
     <div class="form-group">
         {{ form_row(ActionForm.name, {'attr': {'id': 'name', 'class':'form-control', 'placeholder':'Please enter employee name' }}) }}
     </div>
-
+    <br />
     <h3>Deliveries</h3>
     <div class="row">
         <div class="col">
@@ -30,7 +28,7 @@
             {{ form_row(ActionForm.delivery_time, {'attr': {'id': 'delivery_time', 'class':'form-control', 'placeholder':'How many hours it took?' }}) }}
         </div>
     </div>        
-
+    <br />
     <h3>Rideshare</h3>
     <div class="row">
         <div class="col">
@@ -40,7 +38,7 @@
         {{ form_row(ActionForm.rideshare_time, {'attr': {'id': 'rideshare_time', 'class':'form-control', 'placeholder':'How many hours it took?' }}) }}
         </div>
     </div>
-
+    <br />
     <h3>Rent</h3>
     <div class="row">
         <div class="col">
@@ -57,6 +55,8 @@
         </div>
     </div>        
     {{ form_end(ActionForm) }}
+    
+    <p>{% if user is not null %}<br />{{ user|raw}}{% endif %}</p>
 
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>

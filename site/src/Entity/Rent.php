@@ -7,7 +7,7 @@ use App\Entity\Implement\Action;
 use App\Entity\Traits\ActionTrait;
 
 /**
- * Main class for the deliveries.
+ * Main class for the rent.
  *
  * @since        1.0.0
  * @author       Mzimhle Mosiwe <mzimhle.mosiwe@gmail.com>
@@ -15,20 +15,15 @@ use App\Entity\Traits\ActionTrait;
  *
  */
 
-class Delivery extends AbstractAction implements Action {
+class Rent extends AbstractAction implements Action {
 
     use ActionTrait;
 
-    protected $point = 1;
+    protected $point = 2;
     protected $every = 1;
-    protected $boosterAllowed = true;
-    protected $boosterPoint = 5;
-    protected $boosterEvery = 2;
-    // Days no 
-    protected $activeBoosterDateRanges = [
-        '2022-01-01' => '2022-01-31',
-        '2022-06-03' => '2022-06-31'       
-    ];
+    protected $boosterAllowed = false;
+    protected $boosterPoint = 0;
+    protected $boosterEvery = 0;
 
     /**
      * Construct
@@ -47,7 +42,7 @@ class Delivery extends AbstractAction implements Action {
      */
     public function __toString(): string
     {
-        return "Deliveries: <b>{$this->getQuantity()}</b> deliveries in <b>{$this->getTime()}</b> hours with <b>{$this->calculatePoints()}</b> points and will get <b>{$this->calculateAdditionalPoints()}</b> additional points. Totalling <b>{$this->calculateAllPoints()}</b> points. After a month it will be: <b>{$this->calculateExpiryPoints()}</b> <br />";
+        return "Rent: <b>{$this->getQuantity()}</b> rent in <b>{$this->getTime()}</b> days with <b>{$this->calculatePoints()}</b> points and will get <b>{$this->calculateAdditionalPoints()}</b> additional points. Totalling <b>{$this->calculateAllPoints()}</b> points. After a month it will be: <b>{$this->calculateExpiryPoints()}</b> <br />";
     }
     
     /**
@@ -57,7 +52,7 @@ class Delivery extends AbstractAction implements Action {
      *
      */
     public function calculatePoints(): int {
-        return (int)($this->getPoint()*$this->getEvery())*$this->getQuantity();
+        return (int)($this->getPoint()*$this->getEvery())*$this->getTime();
     }
     
     /**
