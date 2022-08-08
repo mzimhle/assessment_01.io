@@ -22,9 +22,9 @@ class User extends AbstractUser {
      *
      * @return void
      */
-    public function __construct(string $name): void
+    public function __construct(string $name)
     {
-    parent::__construct($name);
+        parent::__construct($name);
     }
 
     /**
@@ -35,7 +35,7 @@ class User extends AbstractUser {
      */
     public function __toString(): string
     {
-    return ucwords(strtolower((sprintf('Name of user is: %s', $this->name))));
+        return ucwords(strtolower((sprintf('Name of user is: %s', $this->name))));
     }
 
 }

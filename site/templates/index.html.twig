@@ -15,33 +15,48 @@
 </head>
 <body>
 
-    <form>
-        <div class="form-group">
-            <label for="employee_name">Name</label>
-            <input type="employee_name" class="form-control" id="employee_name" placeholder="Please enter employee name">
-            <small class="form-text text-muted">Enter full name of the employee who did these actions</small>
-        </div>
-        <h3>Deliveries</h3>
-        <div class="row">
-            <div class="col">
-                <input type="text" id="delivery_number" name="delivery_number" class="form-control" placeholder="Number of deliveries made" />
-            </div>
-            <div class="col">
-                <input type="text" id="delivery_hours" name="delivery_hours" class="form-control" placeholder="How many hours it took?" />
-            </div>
-        </div>
+    {{ form_start(ActionForm, {'attr': {'id':'ActionForm'}}) }}
 
-        <h3>Rideshare</h3>
-        <div class="row">
-            <div class="col">
-                <input type="text" id="rideshare_number" name="rideshare_number" class="form-control" placeholder="Number of rideshares made" />
-            </div>
-            <div class="col">
-                <input type="text" id="rideshare_hours" name="rideshare_hours" class="form-control" placeholder="How many hours it took?" />
-            </div>
+    <div class="form-group">
+        {{ form_row(ActionForm.name, {'attr': {'id': 'name', 'class':'form-control', 'placeholder':'Please enter employee name' }}) }}
+    </div>
+
+    <h3>Deliveries</h3>
+    <div class="row">
+        <div class="col">
+        {{ form_row(ActionForm.delivery_quantity, {'attr': {'id': 'delivery_quantity', 'class':'form-control', 'placeholder':'Number of deliveries made' }}) }}            
         </div>
-        
-    </form>
+        <div class="col">
+            {{ form_row(ActionForm.delivery_time, {'attr': {'id': 'delivery_time', 'class':'form-control', 'placeholder':'How many hours it took?' }}) }}
+        </div>
+    </div>        
+
+    <h3>Rideshare</h3>
+    <div class="row">
+        <div class="col">
+        {{ form_row(ActionForm.rideshare_quantity, {'attr': {'id': 'rideshare_quantity', 'class':'form-control', 'placeholder':'Number of rideshares made' }}) }}
+        </div>
+        <div class="col">
+        {{ form_row(ActionForm.rideshare_time, {'attr': {'id': 'rideshare_time', 'class':'form-control', 'placeholder':'How many hours it took?' }}) }}
+        </div>
+    </div>
+
+    <h3>Rent</h3>
+    <div class="row">
+        <div class="col">
+        {{ form_row(ActionForm.rent_quantity, {'attr': {'id': 'rent_quantity', 'class':'form-control', 'placeholder':'Number of rents made' }}) }}
+        </div>
+        <div class="col">
+        {{ form_row(ActionForm.rent_time, {'attr': {'id': 'rent_time', 'class':'form-control', 'placeholder':'How many days it took?' }}) }}
+        </div>
+    </div>
+    <br />
+    <div class="row">
+        <div class="col">
+        {{ form_row(ActionForm.Submit, {'attr': {'id': 'Submit'}}) }}
+        </div>
+    </div>        
+    {{ form_end(ActionForm) }}
 
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>

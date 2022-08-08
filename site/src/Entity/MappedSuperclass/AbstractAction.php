@@ -35,7 +35,7 @@ abstract class AbstractAction {
   *
   * @return void
   */
-  function __construct(int $point, int $every, boolean $boosterAllowed, int $boosterPoint, int $boosterEvery): void  { 
+  function __construct(int $point, int $every, boolean $boosterAllowed, int $boosterPoint, int $boosterEvery)  {
     
     $this->point = $point;
     $this->every = $every;
