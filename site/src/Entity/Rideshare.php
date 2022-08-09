@@ -25,12 +25,15 @@ class Rideshare extends AbstractAction implements Action {
     protected $boosterPoint = 10;
     protected $boosterEvery = 8;
 
+    public \DateTime $date;
+    
     /**
      * Construct
      *
      */
-    public function __construct()
+    public function __construct(\DateTime $date)
     {
+        $this->date = $date;
         parent::__construct($this->point, $this->every, $this->boosterAllowed, $this->boosterPoint, $this->boosterEvery);
     }
 
@@ -42,7 +45,7 @@ class Rideshare extends AbstractAction implements Action {
      */
     public function __toString(): string
     {
-        return "Rideshare: <b>{$this->getQuantity()}</b> ride shares in <b>{$this->getTime()}</b> hours with <b>{$this->calculatePoints()}</b> points and will get <b>{$this->calculateAdditionalPoints()}</b> additional points. Totalling <b>{$this->calculateAllPoints()}</b> points. After a month it will be: <b>{$this->calculateExpiryPoints()}</b> <br />";
+        return "Rideshare: <b>{$this->getQuantity()}</b> ride shares in <b>{$this->getTime()}</b> hours with <b>{$this->calculatePoints()}</b> points and will get <b>{$this->calculateBoosterPoints()}</b> additional points. Totalling <b>{$this->calculateAllPoints()}</b> points. After a month it will be: <b>{$this->calculateExpiryPoints()}</b> <br />";
     }
     
     /**
@@ -56,12 +59,12 @@ class Rideshare extends AbstractAction implements Action {
     }
     
     /**
-     * On submission of the form, this is to calculate after submission.
+     * Current booster calculation
      *
      * @return int
      *
      */
-    public function calculateAdditionalPoints(): int {
+    public function calculateBoosterPoints(): int {
         if($this->getBoosterAllowed()) {
             if($this->getBoosterEvery() !== 0 && $this->getTime() !== 0 && 
                 ((int)($this->getTime() / $this->getBoosterEvery())) > 0) {
@@ -78,7 +81,7 @@ class Rideshare extends AbstractAction implements Action {
      *
      */
     public function calculateAllPoints(): int {
-        return $this->calculatePoints() + $this->calculateAdditionalPoints();
+        return $this->calculatePoints() + $this->calculateBoosterPoints();
     }
 
     /**
@@ -88,6 +91,6 @@ class Rideshare extends AbstractAction implements Action {
      *
      */
     public function calculateExpiryPoints(): int {
-        return $this->calculateAllPoints() - $this->calculateAdditionalPoints();
+        return $this->calculateAllPoints() - $this->calculateBoosterPoints();
     }    
 }

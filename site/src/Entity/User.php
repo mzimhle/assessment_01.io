@@ -29,13 +29,13 @@ class User extends AbstractUser {
      *
      * @return void
      */
-    public function __construct(string $name)
+    public function __construct(string $name, \DateTime $date)
     {
         parent::__construct($name);
         // Initialize objects
-        $this->delivery = new Delivery();
-        $this->rideshare = new Rideshare();
-        $this->rent = new Rent();
+        $this->delivery = new Delivery($date);
+        $this->rideshare = new Rideshare($date);
+        $this->rent = new Rent($date);
     }
 
     /**

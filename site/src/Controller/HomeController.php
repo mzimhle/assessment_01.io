@@ -45,15 +45,18 @@ class HomeController extends AbstractController
         $ActionForm->handleRequest($request);
 
         if ($ActionForm->isSubmitted()) {
-            if ($ActionForm->isValid()) {
+            if($ActionForm->isValid()) {
 
-                $user = new User($ActionDTO->name);
+                $user = new User($ActionDTO->name, new \DateTime($ActionDTO->date));
+
                 // Add the delivery
                 $user->delivery->setQuantity($ActionDTO->delivery_quantity);
                 $user->delivery->setTime($ActionDTO->delivery_time);
+
                 // Add the ride share
                 $user->rideshare->setQuantity($ActionDTO->rideshare_quantity);
-                $user->rideshare->setTime($ActionDTO->rideshare_time);    
+                $user->rideshare->setTime($ActionDTO->rideshare_time);  
+
                 // Add the rent
                 $user->rent->setQuantity($ActionDTO->rent_quantity);
                 $user->rent->setTime($ActionDTO->rent_time);                    

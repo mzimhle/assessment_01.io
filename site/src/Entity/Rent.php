@@ -42,7 +42,7 @@ class Rent extends AbstractAction implements Action {
      */
     public function __toString(): string
     {
-        return "Rent: <b>{$this->getQuantity()}</b> rent in <b>{$this->getTime()}</b> days with <b>{$this->calculatePoints()}</b> points and will get <b>{$this->calculateAdditionalPoints()}</b> additional points. Totalling <b>{$this->calculateAllPoints()}</b> points. After a month it will be: <b>{$this->calculateExpiryPoints()}</b> <br />";
+        return "Rent: <b>{$this->getQuantity()}</b> rent in <b>{$this->getTime()}</b> days with <b>{$this->calculatePoints()}</b> points and will get <b>{$this->calculateBoosterPoints()}</b> additional points. Totalling <b>{$this->calculateAllPoints()}</b> points. After a month it will be: <b>{$this->calculateExpiryPoints()}</b> <br />";
     }
     
     /**
@@ -51,23 +51,17 @@ class Rent extends AbstractAction implements Action {
      * @return int
      *
      */
-    public function calculatePoints(): int {
-        return (int)($this->getPoint()*$this->getEvery())*$this->getTime();
+    public function calculatePoints(): int {        
+        return $this->getTime()*$this->getPoint();
     }
     
     /**
-     * On submission of the form, this is to calculate after submission.
+     * Current booster calculation
      *
      * @return int
      *
      */
-    public function calculateAdditionalPoints(): int {
-        if($this->getBoosterAllowed()) {
-            if($this->getBoosterEvery() !== 0 && $this->getTime() !== 0 && 
-                ((int)($this->getTime() / $this->getBoosterEvery())) > 0) {
-                    return $this->getBoosterPoint();
-            }
-        }
+    public function calculateBoosterPoints(): int {
         return 0;
     }   
 
@@ -78,7 +72,7 @@ class Rent extends AbstractAction implements Action {
      *
      */
     public function calculateAllPoints(): int {
-        return $this->calculatePoints() + $this->calculateAdditionalPoints();
+        return $this->calculatePoints() + $this->calculateBoosterPoints();
     }
 
     /**
@@ -88,6 +82,6 @@ class Rent extends AbstractAction implements Action {
      *
      */
     public function calculateExpiryPoints(): int {
-        return $this->calculateAllPoints() - $this->calculateAdditionalPoints();
+        return $this->calculateAllPoints() - $this->calculateBoosterPoints();
     }    
 }

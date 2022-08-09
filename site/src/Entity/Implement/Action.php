@@ -35,7 +35,7 @@ interface Action {
   * @return int
   *
   */
-    public function calculateAdditionalPoints(): int;
+    public function calculateBoosterPoints(): int;
 
  /**
   * Calculate total points received

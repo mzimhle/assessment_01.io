@@ -14,6 +14,21 @@ class ActionDTO implements GroupSequenceProviderInterface
 {
     /**
      * @Assert\NotBlank    
+     * @Assert\Regex(pattern="/^([a-zA-Z' -]+)$/", message="Please make sure only letters, spaces and hyphens are entered")
+     * @var string
+     */
+    public $name;
+
+    /**
+     * @Assert\NotBlank
+     * @Assert\Type(type="string")
+     * @Assert\Regex(pattern="/^[0-9]{4}-(0[1-9]|1[0-2])-(0[1-9]|[1-2][0-9]|3[0-1])$/", message="Please add a valid date with format YYYY-MM-DD.")     
+     * @var string
+     */
+    public $date;
+
+    /**
+     * @Assert\NotBlank    
      * @Assert\Type( type="integer", message="Please only numbers" )
      * @var int
      */
@@ -53,13 +68,6 @@ class ActionDTO implements GroupSequenceProviderInterface
      * @var int
      */
     public $rent_time;
-
-    /**
-     * @Assert\NotBlank    
-     * @Assert\Regex(pattern="/^([a-zA-Z' -]+)$/", message="Please make sure only letters, spaces and hyphens are entered")
-     * @var string
-     */
-    public $name;
     
     /**
      * @return array
