@@ -5,6 +5,7 @@ namespace App\Entity;
 use App\Entity\MappedSuperclass\AbstractAction;
 use App\Entity\Implement\Action;
 use App\Entity\Traits\ActionTrait;
+use App\Entity\Booster\BoostRideshare;
 
 /**
  * Main class for the ride share.
@@ -65,13 +66,7 @@ class Rideshare extends AbstractAction implements Action {
      *
      */
     public function calculateBoosterPoints(): int {
-        if($this->getBoosterAllowed()) {
-            if($this->getBoosterEvery() !== 0 && $this->getTime() !== 0 && 
-                ((int)($this->getTime() / $this->getBoosterEvery())) > 0) {
-                    return $this->getBoosterPoint();
-            }
-        }
-        return 0;
+        return BoostRideshare::currentBooster($this);
     }   
 
     /**

@@ -5,6 +5,7 @@ namespace App\Entity;
 use App\Entity\MappedSuperclass\AbstractAction;
 use App\Entity\Implement\Action;
 use App\Entity\Traits\ActionTrait;
+use App\Entity\Booster\BoostRent;
 
 /**
  * Main class for the rent.
@@ -25,12 +26,15 @@ class Rent extends AbstractAction implements Action {
     protected $boosterPoint = 0;
     protected $boosterEvery = 0;
 
+    public \DateTime $date;
+
     /**
      * Construct
      *
      */
-    public function __construct()
+    public function __construct(\DateTime $date)
     {
+        $this->date = $date;
         parent::__construct($this->point, $this->every, $this->boosterAllowed, $this->boosterPoint, $this->boosterEvery);
     }
 
@@ -62,7 +66,7 @@ class Rent extends AbstractAction implements Action {
      *
      */
     public function calculateBoosterPoints(): int {
-        return 0;
+        return BoostRent::currentBooster($this);
     }   
 
     /**

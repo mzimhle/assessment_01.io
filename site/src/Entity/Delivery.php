@@ -56,7 +56,7 @@ class Delivery extends AbstractAction implements Action {
      *
      */
     public function calculatePoints(): int {           
-        return (int)($this->getTime()/$this->getPoint())*$this->getQuantity();
+        return $this->getPoint()*$this->getQuantity();
     }
     
     /**
