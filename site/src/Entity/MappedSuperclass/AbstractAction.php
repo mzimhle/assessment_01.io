@@ -13,18 +13,7 @@ namespace App\Entity\MappedSuperclass;
 
 abstract class AbstractAction {
     
-  /** @var string */  
-  protected $point;
-  /** @var int */
-  protected $every;  
-  /** @var bool */  
-  protected $boosterAllowed;
-  /** @var int */
-  protected $boosterPoint;
-  /** @var int */
-  protected $boosterEvery;
-
- /**
+  /**
   * Construct - Set default values
   *
   * @param int $point           - The quantity of a normal point given for an action
@@ -35,14 +24,8 @@ abstract class AbstractAction {
   *
   * @return void
   */
-  function __construct(int $point, int $every, bool $boosterAllowed, int $boosterPoint, int $boosterEvery)  {
-    
-    $this->point = $point;
-    $this->every = $every;
-    $this->boosterAllowed = $boosterAllowed;    
-    $this->boosterPoint = $boosterPoint;
-    $this->boosterEvery = $boosterEvery;
-    
+  function __construct(protected int $point, protected int $every, protected bool $boosterAllowed, protected int $boosterPoint, protected int $boosterEvery)
+  {
   }
   
  /**
@@ -86,9 +69,8 @@ abstract class AbstractAction {
   }
   
  /**
-  * @param int $point
-  * @return Action
-  */
+   * @return Action
+   */
   function setPoint(int $point): Action 
   {
    $this->point = $point;
@@ -96,9 +78,8 @@ abstract class AbstractAction {
   }
 
  /**
-  * @param int $every
-  * @return Action
-  */
+   * @return Action
+   */
   function setEvery(int $every): Action 
   {
    $this->every = $every;
@@ -106,9 +87,8 @@ abstract class AbstractAction {
   }
  
   /**
-  * @param boolean $boosterAllowed
-  * @return Action
-  */
+   * @return Action
+   */
   function setBoosterAllowed(bool $boosterAllowed): Action 
   {
    $this->boosterAllowed = $boosterAllowed;
@@ -116,9 +96,8 @@ abstract class AbstractAction {
   }
 
   /**
-  * @param int $boosterPoint
-  * @return Action
-  */
+   * @return Action
+   */
   function setBoosterPoint(int $boosterPoint): Action 
   {
    $this->boosterPoint = $boosterPoint;
@@ -126,9 +105,8 @@ abstract class AbstractAction {
   }
  
   /**
-  * @param int $boosterEvery
-  * @return Action
-  */
+   * @return Action
+   */
   function setBoosterEvery(int $boosterEvery): Action 
   {
    $this->boosterEvery = $boosterEvery;

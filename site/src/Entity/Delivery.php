@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 
+use Stringable;
+use DateTime;
 use App\Entity\MappedSuperclass\AbstractAction;
 use App\Entity\Implement\Action;
 use App\Entity\Traits\ActionTrait;
@@ -16,25 +18,40 @@ use App\Entity\Booster\BoostDelivery;
  *
  */
 
-class Delivery extends AbstractAction implements Action {
-
+class Delivery extends AbstractAction implements Action, Stringable
+{
     use ActionTrait;
+    /**
+     * @var int
+     */
+    protected int $point = 1;
 
-    protected $point = 1;
-    protected $every = 2;
-    protected $boosterAllowed = true;
-    protected $boosterPoint = 5;
-    protected $boosterEvery = 2;
-    
-    public \DateTime $date;
+    /**
+     * @var int
+     */
+    protected int $every = 2;
+
+    /**
+     * @var bool
+     */
+    protected bool $boosterAllowed = true;
+
+    /**
+     * @var int
+     */
+    protected int $boosterPoint = 5;
+
+    /**
+     * @var int
+     */
+    protected int $boosterEvery = 2;
 
     /**
      * Construct
      *
      */
-    public function __construct(\DateTime $date)
+    public function __construct(public DateTime $date)
     {
-        $this->date = $date;
         parent::__construct($this->point, $this->every, $this->boosterAllowed, $this->boosterPoint, $this->boosterEvery);
     }
 
@@ -46,33 +63,30 @@ class Delivery extends AbstractAction implements Action {
      */
     public function __toString(): string
     {
-        return "Deliveries: <b>{$this->getQuantity()}</b> deliveries in <b>{$this->getTime()}</b> hours with <b>{$this->calculatePoints()}</b> points and will get <b>{$this->calculateBoosterPoints()}</b> additional points. Totalling <b>{$this->calculateAllPoints()}</b> points. After a month it will be: <b>{$this->calculateExpiryPoints()}</b> <br />";
+        return sprintf('Deliveries: <b>%d</b> deliveries in <b>%d</b> hours with <b>%d</b> points and will get <b>%d</b> additional points. Totalling <b>%d</b> points. After a month it will be: <b>%d</b> <br />', $this->getQuantity(), $this->getTime(), $this->calculatePoints(), $this->calculateBoosterPoints(), $this->calculateAllPoints(), $this->calculateExpiryPoints());
     }
-    
+
     /**
      * Calculate recieved points
      *
-     * @return int
      *
      */
     public function calculatePoints(): int {           
         return $this->getPoint()*$this->getQuantity();
     }
-    
+
     /**
      * Current booster calculation, only one booster 
      *
-     * @return int
      *
      */
     public function calculateBoosterPoints(): int {
         return BoostDelivery::currentBooster($this);
-    }   
+    }
 
     /**
      * Calculate all points.
      *
-     * @return int
      *
      */
     public function calculateAllPoints(): int {
@@ -82,10 +96,9 @@ class Delivery extends AbstractAction implements Action {
     /**
      * Calculate expirey date points
      *
-     * @return int
      *
      */
     public function calculateExpiryPoints(): int {
         return $this->calculateAllPoints() - $this->calculateBoosterPoints();
-    }    
+    }
 }

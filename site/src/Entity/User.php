@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 
+use Stringable;
+use DateTime;
 use App\Entity\MappedSuperclass\AbstractUser;
 use App\Entity\Delivery;
 use App\Entity\Rideshare;
@@ -16,10 +18,12 @@ use App\Entity\Rent;
  *
  */
 
-class User extends AbstractUser {
+class User extends AbstractUser implements Stringable {
 
     public ?Delivery $delivery;
+    
     public ?Rideshare $rideshare;
+    
     public ?Rent $rent;
 
     /**
@@ -29,7 +33,7 @@ class User extends AbstractUser {
      *
      * @return void
      */
-    public function __construct(string $name, \DateTime $date)
+    public function __construct(string $name, DateTime $date)
     {
         parent::__construct($name);
         // Initialize objects
@@ -46,14 +50,13 @@ class User extends AbstractUser {
      */
     public function __toString(): string
     {
-        return "Employee <strong>{$this->name}</strong> <br />{$this->delivery} <br />{$this->rideshare} <br />{$this->rent}<br />Total Points: <b>{$this->TotalPoints()}</b> with <b>{$this->TotalExpiry()}</b> month end will be removed.";
+        return sprintf('Employee <strong>%s</strong> <br />%s <br />%s <br />%s<br />Total Points: <b>%d</b> with <b>%d</b> month end will be removed.', $this->name, $this->delivery, $this->rideshare, $this->rent, $this->TotalPoints(), $this->TotalExpiry());
     }
 
     /**
      *
      * Return total number of points for all actions in this given time
-     *  
-     * @return int
+     *
      */
     public function TotalPoints(): int
     {
@@ -63,8 +66,7 @@ class User extends AbstractUser {
     /**
      *
      * Total number of points after expiry
-     *  
-     * @return int
+     *
      */
     public function TotalExpiry(): int
     {

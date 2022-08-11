@@ -13,38 +13,25 @@ namespace App\Entity\Traits;
 trait ActionTrait
 {
     private int $quantity;
+    
     private int $time;
 
-    /**
-    * @return int
-    */
     function getQuantity(): int
     {
         return $this->quantity;
     }
 
-    /**
-    * @return int
-    */
     function getTime(): int
     {
         return $this->time;
     }
   
-    /**
-    * @param int $quantity
-    * @return self
-    */
     public function setQuantity(int $quantity): self
     {
         $this->quantity = $quantity;
         return $this;
     }
 
-    /**
-    * @param int $time
-    * @return self
-    */
     public function setTime(int $time): self
     {
         $this->time = $time;

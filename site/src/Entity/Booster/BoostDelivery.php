@@ -2,6 +2,8 @@
 
 namespace App\Entity\Booster;
 
+use RuntimeException;
+use DateTime;
 use App\Entity\Delivery;
 use App\Entity\Implement\Booster;
 use App\Entity\MappedSupperclass\AbstractionAction;
@@ -21,8 +23,7 @@ class BoostDelivery implements Booster {
      *
      * Current booster.
      * NOTE: Each action can be part of only one booster
-     *  
-     * @return int
+     *
      */
     public static function currentBooster(Object $delivery): int
     {
@@ -38,21 +39,21 @@ class BoostDelivery implements Booster {
     public static function checkObject(Object $delivery): bool
     {
         if($delivery instanceof Delivery) return true;
+        
         // Throw exception if there is a wrong object
-        throw new \RuntimeException(sprintf('Method "%s::%s" parameter must be instanceof "App\Entity\Delivery".', __CLASS__, __METHOD__));
+        throw new RuntimeException(sprintf('Method "%s::%s" parameter must be instanceof "App\Entity\Delivery".', self::class, __METHOD__));
     }
     
     /**
      * Check dates if the dates 
-     *  
-     * @return int
+     *
      */
-    public static function checkDates(\DateTime $date, array $boosterActiveDates): bool {
+    public static function checkDates(DateTime $date, array $boosterActiveDates): bool {
 
         foreach($boosterActiveDates as $from => $to) {
 
-            $start = new \DateTime($from);
-            $end = new \DateTime($to);
+            $start = new DateTime($from);
+            $end = new DateTime($to);
 
             if (($date->getTimestamp() >= $start->getTimestamp()) && ($date->getTimestamp() <= $end->getTimestamp())) {
                 return true;
@@ -67,8 +68,7 @@ class BoostDelivery implements Booster {
      * Booster 1
      *
      * 5 deliveries in 2 hours result in 5 additional points.
-     *  
-     * @return int
+     *
      */
     public static function FiveInTwoBooster(Delivery $delivery): int {
         // Days allowed to give booster
@@ -77,12 +77,11 @@ class BoostDelivery implements Booster {
             '2022-06-03' => '2022-06-31'       
         ];
 
-        if($delivery->getBoosterAllowed() && self::checkDates($delivery->date, $boosterActiveDates)) {
-            if($delivery->getBoosterEvery() !== 0 && $delivery->getTime() !== 0 && 
-                ((int)($delivery->getTime() / $delivery->getBoosterEvery())) > 0) {
-                    return $delivery->getBoosterPoint();
-            }
+        if($delivery->getBoosterAllowed() && self::checkDates($delivery->date, $boosterActiveDates) && ($delivery->getBoosterEvery() !== 0 && $delivery->getTime() !== 0 && 
+            ((int)($delivery->getTime() / $delivery->getBoosterEvery())) > 0)) {
+            return $delivery->getBoosterPoint();
         }
+        
         return 0;
     }
     

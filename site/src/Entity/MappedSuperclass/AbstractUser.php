@@ -13,19 +13,17 @@ namespace App\Entity\MappedSuperclass;
 
 abstract class AbstractUser {
 
-  /** @var string */  
-  protected $name;
-
- /**
+  /**
   * Construct - Set default values
   *
   * @param string $name
   *
   * @return void
   */
-  function __construct(string $name) {
-    $this->name = $name;
+  function __construct(protected string $name)
+  {
   }
+  
  /**
   * @return string
   */
@@ -35,9 +33,8 @@ abstract class AbstractUser {
   }
   
  /**
-  * @param string $name
-  * @return User
-  */
+   * @return User
+   */
   function setName(string $name): User 
   {
    $this->name = $name;

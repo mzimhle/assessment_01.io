@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 
+use Stringable;
+use DateTime;
 use App\Entity\MappedSuperclass\AbstractAction;
 use App\Entity\Implement\Action;
 use App\Entity\Traits\ActionTrait;
@@ -16,25 +18,40 @@ use App\Entity\Booster\BoostRent;
  *
  */
 
-class Rent extends AbstractAction implements Action {
-
+class Rent extends AbstractAction implements Action, Stringable
+{
     use ActionTrait;
+    /**
+     * @var int
+     */
+    protected int $point = 2;
 
-    protected $point = 2;
-    protected $every = 1;
-    protected $boosterAllowed = false;
-    protected $boosterPoint = 0;
-    protected $boosterEvery = 0;
+    /**
+     * @var int
+     */
+    protected int $every = 1;
 
-    public \DateTime $date;
+    /**
+     * @var bool
+     */
+    protected bool $boosterAllowed = false;
+
+    /**
+     * @var int
+     */
+    protected int $boosterPoint = 0;
+
+    /**
+     * @var int
+     */
+    protected int $boosterEvery = 0;
 
     /**
      * Construct
      *
      */
-    public function __construct(\DateTime $date)
+    public function __construct(public DateTime $date)
     {
-        $this->date = $date;
         parent::__construct($this->point, $this->every, $this->boosterAllowed, $this->boosterPoint, $this->boosterEvery);
     }
 
@@ -46,33 +63,30 @@ class Rent extends AbstractAction implements Action {
      */
     public function __toString(): string
     {
-        return "Rent: <b>{$this->getQuantity()}</b> rent in <b>{$this->getTime()}</b> days with <b>{$this->calculatePoints()}</b> points and will get <b>{$this->calculateBoosterPoints()}</b> additional points. Totalling <b>{$this->calculateAllPoints()}</b> points. After a month it will be: <b>{$this->calculateExpiryPoints()}</b> <br />";
+        return sprintf('Rent: <b>%d</b> rent in <b>%d</b> days with <b>%d</b> points and will get <b>%d</b> additional points. Totalling <b>%d</b> points. After a month it will be: <b>%d</b> <br />', $this->getQuantity(), $this->getTime(), $this->calculatePoints(), $this->calculateBoosterPoints(), $this->calculateAllPoints(), $this->calculateExpiryPoints());
     }
-    
+
     /**
      * Calculate recieved points
      *
-     * @return int
      *
      */
     public function calculatePoints(): int {        
         return $this->getTime()*$this->getPoint();
     }
-    
+
     /**
      * Current booster calculation
      *
-     * @return int
      *
      */
     public function calculateBoosterPoints(): int {
         return BoostRent::currentBooster($this);
-    }   
+    }
 
     /**
      * Calculate all points.
      *
-     * @return int
      *
      */
     public function calculateAllPoints(): int {
@@ -82,10 +96,9 @@ class Rent extends AbstractAction implements Action {
     /**
      * Calculate expirey date points
      *
-     * @return int
      *
      */
     public function calculateExpiryPoints(): int {
         return $this->calculateAllPoints() - $this->calculateBoosterPoints();
-    }    
+    }
 }

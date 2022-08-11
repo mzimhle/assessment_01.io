@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use DateTime;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 // Requests
 use Symfony\Component\HttpFoundation\Response;
@@ -32,9 +33,7 @@ class HomeController extends AbstractController
     
     /**
      * Landing page for the website
-     * 
-     * @param Request $request 
-     * @return Response
+     *
      *	
      */
     private function handleActionDTO(Request $request, ActionDTO $ActionDTO): Response
@@ -44,23 +43,17 @@ class HomeController extends AbstractController
         
         $ActionForm->handleRequest($request);
 
-        if ($ActionForm->isSubmitted()) {
-            if($ActionForm->isValid()) {
-
-                $user = new User($ActionDTO->name, new \DateTime($ActionDTO->date));
-
-                // Add the delivery
-                $user->delivery->setQuantity($ActionDTO->delivery_quantity);
-                $user->delivery->setTime($ActionDTO->delivery_time);
-
-                // Add the ride share
-                $user->rideshare->setQuantity($ActionDTO->rideshare_quantity);
-                $user->rideshare->setTime($ActionDTO->rideshare_time);  
-
-                // Add the rent
-                $user->rent->setQuantity($ActionDTO->rent_quantity);
-                $user->rent->setTime($ActionDTO->rent_time);                    
-            }
+        if ($ActionForm->isSubmitted() && $ActionForm->isValid()) {
+            $user = new User($ActionDTO->name, new DateTime($ActionDTO->date));
+            // Add the delivery
+            $user->delivery->setQuantity($ActionDTO->delivery_quantity);
+            $user->delivery->setTime($ActionDTO->delivery_time);
+            // Add the ride share
+            $user->rideshare->setQuantity($ActionDTO->rideshare_quantity);
+            $user->rideshare->setTime($ActionDTO->rideshare_time);
+            // Add the rent
+            $user->rent->setQuantity($ActionDTO->rent_quantity);
+            $user->rent->setTime($ActionDTO->rent_time);
         }
 
         return $this->render('index.html.twig', [
@@ -71,22 +64,20 @@ class HomeController extends AbstractController
 
     /**
      * Display error messages from a form
+     * @return mixed[]
      */
     private function getErrorMessages(Form $form): array
     {
-        $errors = array();
+        $errors = [];
 
         foreach ($form->getErrors() as $key => $error) {
-            if ($form->isRoot()) {
-                $errors[] = $error->getMessage();
-            } else {
-                $errors[] = $error->getMessage();
-            }
+            $errors[] = $form->isRoot() ? $error->getMessage() : $error->getMessage();
         }
 
         foreach ($form->all() as $child) {
             if (!$child->isValid()) {
-                for ($i = 0; $i < count($this->getErrorMessages($child)); $i++) {
+                $getErrorMessagesCount = count($this->getErrorMessages($child));
+                for ($i = 0; $i < $getErrorMessagesCount; ++$i) {
                     $errors[] = $child->getName().' - '.$this->getErrorMessages($child)[$i];
                 }
             }

@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 
+use Stringable;
+use DateTime;
 use App\Entity\MappedSuperclass\AbstractAction;
 use App\Entity\Implement\Action;
 use App\Entity\Traits\ActionTrait;
@@ -16,25 +18,40 @@ use App\Entity\Booster\BoostRideshare;
  *
  */
 
-class Rideshare extends AbstractAction implements Action {
-
+class Rideshare extends AbstractAction implements Action, Stringable
+{
     use ActionTrait;
+    /**
+     * @var int
+     */
+    protected int $point = 1;
 
-    protected $point = 1;
-    protected $every = 1;
-    protected $boosterAllowed = true;
-    protected $boosterPoint = 10;
-    protected $boosterEvery = 8;
+    /**
+     * @var int
+     */
+    protected int $every = 1;
 
-    public \DateTime $date;
-    
+    /**
+     * @var bool
+     */
+    protected bool $boosterAllowed = true;
+
+    /**
+     * @var int
+     */
+    protected int $boosterPoint = 10;
+
+    /**
+     * @var int
+     */
+    protected int $boosterEvery = 8;
+
     /**
      * Construct
      *
      */
-    public function __construct(\DateTime $date)
+    public function __construct(public DateTime $date)
     {
-        $this->date = $date;
         parent::__construct($this->point, $this->every, $this->boosterAllowed, $this->boosterPoint, $this->boosterEvery);
     }
 
@@ -46,33 +63,30 @@ class Rideshare extends AbstractAction implements Action {
      */
     public function __toString(): string
     {
-        return "Rideshare: <b>{$this->getQuantity()}</b> ride shares in <b>{$this->getTime()}</b> hours with <b>{$this->calculatePoints()}</b> points and will get <b>{$this->calculateBoosterPoints()}</b> additional points. Totalling <b>{$this->calculateAllPoints()}</b> points. After a month it will be: <b>{$this->calculateExpiryPoints()}</b> <br />";
+        return sprintf('Rideshare: <b>%d</b> ride shares in <b>%d</b> hours with <b>%d</b> points and will get <b>%d</b> additional points. Totalling <b>%d</b> points. After a month it will be: <b>%d</b> <br />', $this->getQuantity(), $this->getTime(), $this->calculatePoints(), $this->calculateBoosterPoints(), $this->calculateAllPoints(), $this->calculateExpiryPoints());
     }
-    
+
     /**
      * Calculate recieved points
      *
-     * @return int
      *
      */
     public function calculatePoints(): int {
         return (int)($this->getPoint()*$this->getEvery())*$this->getQuantity();
     }
-    
+
     /**
      * Current booster calculation
      *
-     * @return int
      *
      */
     public function calculateBoosterPoints(): int {
         return BoostRideshare::currentBooster($this);
-    }   
+    }
 
     /**
      * Calculate all points.
      *
-     * @return int
      *
      */
     public function calculateAllPoints(): int {
@@ -82,10 +96,9 @@ class Rideshare extends AbstractAction implements Action {
     /**
      * Calculate expirey date points
      *
-     * @return int
      *
      */
     public function calculateExpiryPoints(): int {
         return $this->calculateAllPoints() - $this->calculateBoosterPoints();
-    }    
+    }
 }

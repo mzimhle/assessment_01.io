@@ -70,7 +70,7 @@ class ActionDTO implements GroupSequenceProviderInterface
     public $rent_time;
     
     /**
-     * @return array
+     * @return string[]
      */
     public function getGroupSequence(): array
     {

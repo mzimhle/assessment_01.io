@@ -2,6 +2,8 @@
 
 namespace App\Entity\Booster;
 
+use RuntimeException;
+use DateTime;
 use App\Entity\Rideshare;
 use App\Entity\Implement\Booster;
 use App\Entity\MappedSupperclass\AbstractionAction;
@@ -21,8 +23,7 @@ class BoostRideshare implements Booster {
      *
      * Current booster.
      * NOTE: Each action can be part of only one booster
-     *  
-     * @return int
+     *
      */
     public static function currentBooster(Object $rideshare): int
     {
@@ -38,21 +39,21 @@ class BoostRideshare implements Booster {
     public static function checkObject(Object $rideshare): bool
     {
         if($rideshare instanceof Rideshare) return true;
+        
         // Throw exception if there is a wrong object
-        throw new \RuntimeException(sprintf('Method "%s::%s" parameter must be instanceof "App\Entity\Rideshare".', __CLASS__, __METHOD__));
+        throw new RuntimeException(sprintf('Method "%s::%s" parameter must be instanceof "App\Entity\Rideshare".', self::class, __METHOD__));
     }
     
     /**
      * Check dates if the dates 
-     *  
-     * @return int
+     *
      */
-    public static function checkDates(\DateTime $date, array $boosterActiveDates): bool {
+    public static function checkDates(DateTime $date, array $boosterActiveDates): bool {
 
         foreach($boosterActiveDates as $from => $to) {
 
-            $start = new \DateTime($from);
-            $end = new \DateTime($to);
+            $start = new DateTime($from);
+            $end = new DateTime($to);
 
             if (($date->getTimestamp() >= $start->getTimestamp()) && ($date->getTimestamp() <= $end->getTimestamp())) {
                 return true;
@@ -67,8 +68,7 @@ class BoostRideshare implements Booster {
      * Booster 1
      *
      * 5 rideshares in 8 hours result in 10 additional points.
-     *  
-     * @return int
+     *
      */
     public static function FiveInEightBooster(Rideshare $rideshare): int {
         // Days allowed to give booster
@@ -77,12 +77,11 @@ class BoostRideshare implements Booster {
             '2022-06-03' => '2022-06-31'       
         ];
 
-        if($rideshare->getBoosterAllowed() && self::checkDates($rideshare->date, $boosterActiveDates)) {
-            if($rideshare->getBoosterEvery() !== 0 && $rideshare->getTime() !== 0 && 
-                ((int)($rideshare->getTime() / $rideshare->getBoosterEvery())) > 0) {
-                    return $rideshare->getBoosterPoint();
-            }
+        if($rideshare->getBoosterAllowed() && self::checkDates($rideshare->date, $boosterActiveDates) && ($rideshare->getBoosterEvery() !== 0 && $rideshare->getTime() !== 0 && 
+            ((int)($rideshare->getTime() / $rideshare->getBoosterEvery())) > 0)) {
+            return $rideshare->getBoosterPoint();
         }
+        
         return 0;
     }
     
