@@ -1,0 +1,1 @@
+{"version":1,"defects":{"App\\Tests\\Form\\Type\\TestedTypeTest::testSubmitValidData":4,"App\\Tests\\Form\\Type\\TestedTypeTest::testCustomFormView":4},"times":{"App\\Tests\\Form\\Type\\TestedTypeTest::testSubmitValidData":0.2,"App\\Tests\\Form\\Type\\TestedTypeTest::testCustomFormView":0}}
