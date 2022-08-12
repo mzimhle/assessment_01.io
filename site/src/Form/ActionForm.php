@@ -24,14 +24,14 @@ class ActionForm extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('name', TextType::class, ['label' => 'Name'])
-            ->add('date', TextType::class, ['label' => 'Date of actions'])            
-            ->add('delivery_quantity', IntegerType::class, ['label' => 'Deliveries made'])
-            ->add('delivery_time', IntegerType::class, ['label' => 'Delivery hours it took'])
-            ->add('rideshare_quantity', IntegerType::class, ['label' => 'Rideshares made'])
-            ->add('rideshare_time', IntegerType::class, ['label' => 'Rideshare made in hours'])   
-            ->add('rent_quantity', IntegerType::class, ['label' => 'Number of rented books'])
-            ->add('rent_time', IntegerType::class, ['label' => 'Days Books were rented'])
+            ->add('name', TextType::class, ['label' => 'Name', 'data' => 'Name Surname'])
+            ->add('date', TextType::class, ['label' => 'Date of actions', 'data' => '2022-01-12'])            
+            ->add('delivery_quantity', IntegerType::class, ['label' => 'Deliveries made', 'data' => 7])
+            ->add('delivery_time', IntegerType::class, ['label' => 'Delivery hours it took', 'data' => 2])
+            ->add('rideshare_quantity', IntegerType::class, ['label' => 'Rideshares made', 'data' => 3])
+            ->add('rideshare_time', IntegerType::class, ['label' => 'Rideshare made in hours', 'data' => 4])   
+            ->add('rent_quantity', IntegerType::class, ['label' => 'Number of rented books', 'data' => 1])
+            ->add('rent_time', IntegerType::class, ['label' => 'Days Books were rented', 'data' => 3])
             ->add('Submit', SubmitType::class, [ 'label' => 'Save'  ]);
     }
 

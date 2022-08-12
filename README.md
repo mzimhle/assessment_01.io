@@ -47,3 +47,12 @@ We also have booster classes that are in the folder `/site/src/Booster/` which i
 
 - I did not configure unite tests as it is not my strong point, so did not want to waist time on that, I am however going to register it on UDEMY for courses.
 - I installed `"rector/rector": "^0.13.10"` which is a tool I run to make sure that my PHP code follows PSR 4 rules and is PHP 8.1 compatible. It also checks coding style and quality, changes it automatically for you where needed. Its setup is in the `/site/rector.php` file.
+
+## Run the application on Docker
+To run this, you must first clone the repository to any folder, e.g:
+`git clone https://github.com/mzimhle/assessment_01.io.git assessment_folder`, after this do the following:
+- Change the site path in the `/assessment_folder/docker/.env` file to be a path to where you saved the assessment repository. Make sure the last forward slash is there.
+- Make sure your port 8084 is not used on your computer, because that is the port I used for this.
+- On your commnand line, go to the path `../assessment_folder/docker/` then run the following command `docker-compose up --build`.
+- This will start docker, after which you can access the website on the url: http://localhost:8084/
+- Press submit as I have already added the values on the example.
