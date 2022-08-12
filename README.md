@@ -9,7 +9,6 @@ Assessment for senior developer position. Listed development tools and languages
 - GitLab
 - Heroku
 - PostgreSQL, AWS, and growing
-
 Used languages and tools
 - Symfony 6.0.11
 - PHP 8.1.7 (docker image)
@@ -17,6 +16,7 @@ Used languages and tools
 - Docker Compose 2.0.0-rc.3
 - GitLab
 - Composer 2.1.9
+- Rector
 ## Structure and Environment Setup
 We have the following structure of our folders:
 ```sh
@@ -26,14 +26,24 @@ We have the following structure of our folders:
     /site       - All website files
     README.md   - Documentation of the entire assessment
 ```
-###### PLEASE MAKE SURE
+*PLEASE MAKE SURE*
 - Make sure that you make sure the docker/.env file has the correct root variables, my root is `c:\sites\assessment_01.io\` as per environmental variable `ROOT_DIR`, this is used for docker to find the project and its image.
 - My image is running `PHP 8.1.7`
 
 ## Structure
+`/site/src/Entity/User.php`:
+Class keeps the employee's name and date of actions performed, as well as any other details that can be added later. It has objects of the actions the user can perform such as delivering, ridesharing and renting. 
 
-All my classes are in the `src/Entity` folder, there I have classes and their respective abstract classes they extend in the `src/Entity/MappedSupperclass` folder, because we have a user and the actions he/she will take, we will give those actions an `src/Entity/MappedSupperclass/AbstractAction.php` class which will keep all properties and methods that are used by all actions, of which in the actions are in `src/Entity/Delivery.php`, `src/Entity/RideShare.php` and `src/Entity/Rent.php`. These actions will extend the abstract action class. 
+The user class is linked to actions that can can be performed by this given user. These action classes have custom calculations within them which are defined in their methods, but also implement the `/site/src/Entity/Implement/Action.php` interface so that they all have similar methods. These actions are defined in the other 3 classes, which are below:
 
-This will be the same with the `src/Entity/User.php` and the `src/Entity/MappedSupperclass/AbstractUser.php` classes.
+`/site/src/Entity/Delivery.php`
+`/site/src/Entity/Rent.php`
+`/site/src/Entity/Rideshare.php`
 
-The reason why I took this route was to first look at the actions as to how they are related, as you can see in the abstract class they extend, there are a few properties, of which they all will have their getters and setters. But because all these actions are calculated differently, I then simply have to create a class for each and do all the separate calculations there, this will help if the actions have to increase and add more or a calculation has to change.
+As much as the above actions extend the abstract class `/site/src/Entity/MappedSuperclass/AbstractAction.php`, in order to put getter and setter methods in one class, they also, as a rule, can only have one boostetr
+We also have booster classes that are in the folder `/site/src/Booster/` which implement the `/site/src/Entity/Implement/Booster.php` class. On the booster class, for example the `/site/src/Booster/BoostDelivery.php`, we implement the Booster interface, so that we can force each action's booster to call the current booster "currentBooster", this is so if we want to change the booster, we will create a new method for it, the add it inside this "currentBooster" method.
+
+## Notes
+
+- I did not configure unite tests as it is not my strong point, so did not want to waist time on that, I am however going to register it on UDEMY for courses.
+- I installed `"rector/rector": "^0.13.10"` which is a tool I run to make sure that my PHP code follows PSR 4 rules and is PHP 8.1 compatible. It also checks coding style and quality, changes it automatically for you where needed. Its setup is in the `/site/rector.php` file.
